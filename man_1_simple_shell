@@ -1,0 +1,36 @@
+.TH printf(1)
+
+.SH NAME
+.B man_simple_shell
+
+.SH SYNOPSIS
+.SY
+#include "main.h"
+.br
+int _printf(const char *format, ...);
+.YS
+
+.SH DESCRIPTION
+.B _printf
+This is a simple shell project
+The format string could be follow by the following conversion requests:
+
+.LP
+Conversion specifiers:
+.LP 
+c: Prints a character
+.LP 
+s: Prints a string of characters.
+.LP 
+i: i prints a integer.
+.LP 
+d: d prints a decimal number.
+.LP
+u: prints unsigned int
+.LP
+r: prints a string in reverse.
+.SH RETURN
+Succes unless an option is given or a write or a write argument error occurs.
+
+.SH AUTHOR
+Mateo Victorica and Ezequiel Aldabalde
