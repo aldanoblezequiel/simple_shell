@@ -5,5 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
-char **split(char *line, char *delim);
+int _which(char *lf);
+

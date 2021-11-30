@@ -1,6 +1,6 @@
 #include "main.h"
 
-char **split(char *line)
+char **split(char *line, char *delim)
 {
 	int buffsize = 1024, i = 0;
 	char *token;
@@ -12,12 +12,12 @@ char **split(char *line)
 		exit(1);
 	}
 
-	token = strtok(line, " ");
+	token = strtok(line, delim);
 	while (token != NULL)
 	{
 		tokens[i] = token;
 		i++;
-		token = strtok(NULL, " ");
+		token = strtok(NULL, delim);
 	}
 	tokens[i] = NULL;
 	return (tokens);
