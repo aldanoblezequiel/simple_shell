@@ -1,6 +1,27 @@
 #include "main.h"
 #include <sys/wait.h>
 
+
+void printpath(void)
+{
+	int i = 0, j;
+	char **buff;
+	char *strings;
+
+	for (i = 0; environ[i] != NULL; i++)
+	{
+		if (strstr(environ[i], "PATH") != 0)
+		{
+			buff = split(environ[i], "=");
+		}
+	}
+	strings = buff[1];
+	buff = split(strings, ":");
+	for (j = 0; buff[j] != NULL; j++)
+		printf("%s\n", buff[j]);
+	free(buff);
+}
+
 char *_getline(void)
 {
 	char *line = NULL;
@@ -33,13 +54,14 @@ int _execout(char *line)
 int main(int argc, char *argv[], char **env)
 {
 	char *line;
+	char *env1;
 
 
 	while (1)
 	{
 		printf("$ ");
 		line = _getline();
-		_execout(line);
+		printpath();
 		free(line);
 
 		
