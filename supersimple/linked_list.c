@@ -19,7 +19,6 @@ node *head_linked_list(char **env)
 node *add_node_end(node **head, const char *str)
 {
 	node *end_head;
-	node index;
 	node *temp;
 
 	end_head = malloc(sizeof(node));
@@ -27,16 +26,19 @@ node *add_node_end(node **head, const char *str)
 		return (NULL);
 
 	end_head->str = strdup(str);
-	for (index = 0; str[index]; index++)
-		;
+	if (end_head->str == NULL)
+	{
+		free(end_head);
+		return (NULL);
+	}
 	end_head->next = NULL;
-	temp = *head;
-	if (temp == NULL)
+	if (*head == NULL)
 	{
 		*head = end_head;
 	}
 	else
 	{
+		temp = *head;
 		while (temp->next != NULL)
 			temp = temp->next;
 		temp->next = end_head;

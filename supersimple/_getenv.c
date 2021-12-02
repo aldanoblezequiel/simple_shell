@@ -4,18 +4,17 @@ char *_getenv(const char *name)
 {
 	int i = 0;
 	char **buff;
-	char **aux;
+	char *aux;
 
 	while (environ[i])
 	{
 		if (strstr(environ[i], name) != 0)
 		{
 			buff = split(environ[i], "=");
-			aux = buff;
+			aux = buff[1];
 			free(buff);
-			return (aux[1]);
+			return (aux);
 		}
 		i++;
 	}
-	exit (1);
 }

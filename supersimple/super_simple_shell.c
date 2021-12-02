@@ -2,26 +2,14 @@
 #include <sys/wait.h>
 
 
-void printpath(void)
+char **printpath(char *env_var)
 {
-	int i = 0, j;
 	char **buff;
-	char *strings;
 
-	for (i = 0; environ[i] != NULL; i++)
-	{
-		if (strstr(environ[i], "PATH") != 0)
-		{
-			buff = split(environ[i], "=");
-		}
-	}
-	strings = buff[1];
-	buff = split(strings, ":");
-	for (j = 0; buff[j] != NULL; j++)
-		printf("%s\n", buff[j]);
-	free(buff);
+	buff = split(env_var, ":");
+	return (buff);
+
 }
-
 char *_getline(void)
 {
 	char *line = NULL;
@@ -61,8 +49,9 @@ int main(int argc, char *argv[], char **env)
 	{
 		printf("$ ");
 		line = _getline();
-		printpath();
+		print_list(head_linked_list(printpath(_getenv(line))));
 		free(line);
+		freelinked(|:
 
 		
 	}
