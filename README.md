@@ -2,7 +2,7 @@
 <br>
 <p>This is a School project for Holberton School Uruguay. We created our own Linux Shell capable of executing certain commands.</p>
 <br>
-## *Project Learning Objectives*¨
+# *Project Learning Objectives*¨
 <br>
 <p> At the end of this project, we are expected to be able to explain to anyone, without the help of Google:</p>
 - Who designed and implemented the original Unix operating system
