@@ -2,9 +2,9 @@
 <br>
 <p>This is a School project for Holberton School Uruguay. We created our own Linux Shell capable of executing certain commands.</p>
 <br>
-# *Project Learning Objectives*¨
+## *Project Learning Objectives*¨
 <br>
-<p> At the end of this project, we are expected to be able to explain to anyone, without the help of Google:</p>
+<p> At the end of this project, we are expected to be able to explain to anyone, without the help of Google:
 - Who designed and implemented the original Unix operating system
 - Who wrote the first version of the UNIX shell
 - Who invented the B programming language (the direct predecessor to the C programming language)
@@ -19,6 +19,6 @@
 - How to execute another program with the execve system call
 - How to suspend the execution of a process until one of its children terminates
 - What is EOF / “end-of-file”?
+</p>
 <br>
-###
 
