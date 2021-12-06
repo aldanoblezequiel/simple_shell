@@ -1,8 +1,8 @@
-# ***Simple_Shell***
+<h1> ***Simple_Shell***</h1>
 <br>
 This is a School project for Holberton School Uruguay. We created our own Linux Shell capable of executing certain commands.
 <br>
-## ***Project Learning Objectives***
+<h2> ***Project Learning Objectives***</h2>
 <br>
 <p> At the end of this project, we are expected to be able to explain to anyone, without the help of Google:</P>
 - Who designed and implemented the original Unix operating system
