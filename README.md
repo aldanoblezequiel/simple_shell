@@ -41,7 +41,7 @@ Our Shell is able to:
 <br>
 - If an executable cannot be found, print an error message and display the prompt again
 <br>
-- Handle errors.Handle errors
+- Handle errors
 <br>
 - Handle the “end of file” condition (Ctrl+D)
 <br>
@@ -52,7 +52,27 @@ Our Shell is able to:
 - Implement the exit built-in, that exits the shell
 <br>
 <h2>Flowchart</h2>
--a
--b
--c
-
+<br>
+<h2>Formal Requirements</h2>
+<br>
+- Allowed editors: vi, vim, emacs
+<br>
+- All files must be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
+<br>
+- All files must end with a new line
+<br>
+- A README.md file, at the root of the folder of the project is mandatory
+<br>
+- All the code should use the Betty style. It will be checked using betty-style.pl and betty-doc.pl
+<br>
+- The shell should not have any memory leaks
+<br>
+- No more than 5 functions per file
+<br>
+- All header files should be include guarded
+<br>
+- Use system calls only when need to
+<br>
+<h2>Authors</h2>
+<br>
+Mateo Victorica and Ezequiel Aldabalde.
