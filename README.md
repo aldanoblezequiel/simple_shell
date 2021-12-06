@@ -33,7 +33,7 @@ This is a School project for Holberton School Uruguay. We created our own Linux 
 <br>
 - What is EOF / “end-of-file”?
 <br>
-<h3> Shell Features</h3>
+<h2> Shell Features</h2>
 <br>
 Our Shell is able to:
 <br>
@@ -51,7 +51,7 @@ Our Shell is able to:
 <br>
 - Implement the exit built-in, that exits the shell
 <br>
-<h4>Flowchart</h4>
+<h2>Flowchart</h2>
 -a
 -b
 -c
