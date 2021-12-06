@@ -24,13 +24,15 @@ typedef struct node
 	char *str;
 	struct node *next;
 } node;
+int execout(char **tokline, char **tokpath);
 int shell(char **envar);
+char **printpath(char *path);
 char *_strcat(char *dest, char *src);
 int _strlen(char *s);
 char *_strstr(char *haystack, char *needle);
 int _which(char *lf);
 char **split(char *line, char *delim);
-char *_getenv(const char *name);
+char *_getenv(char *name);
 int _strcmp(char *s1, char *s2);
 node *head_linked_list(char **env);
 node *add_node_end(node **head, const char *str);
