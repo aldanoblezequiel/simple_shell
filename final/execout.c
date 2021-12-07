@@ -2,16 +2,15 @@
 /**
  * execout - a function that reads input arguments and executes commands
  * @tokline: tokenized input by user
+ * @tokpath: tokenized path
  * Return: 1 if successful 0 if error
  */
 
-int execout(char **tokline, char **tokpath)
+char *execout(char **tokline, char **tokpath)
 {
-	pid_t child;
-	int status;
+	int status, i, notexe, child;
 	char *pathdup;
 	struct stat st;
-	int i;
 
 	if ((strncmp(tokline[0], ".", 1)) == 0 || (strncmp(tokline[0], "/", 1) == 0))
 	{
@@ -19,7 +18,7 @@ int execout(char **tokline, char **tokpath)
 		if (child == 0)
 		{
 			if (execve(tokline[0], tokline, NULL) == -1)
-				perror("Error: ");
+				perror("Error");
 		}
 		else
 			wait(&status);
@@ -29,16 +28,15 @@ int execout(char **tokline, char **tokpath)
 	{
 		for (i = 0; tokpath[i] != NULL; i++)
 		{
-			pathdup = strdup(tokpath[i]);
-			pathdup = strcat(pathdup, "/");
-			pathdup = strcat(pathdup, tokline[0]);
+			pathdup = strdup(tokpath[i]), pathdup = strcat(pathdup, "/");
+			pathdup = strcat(pathdup, tokline[0]), notexe = stat(pathdup, &st);
 			if (stat(pathdup, &st) == 0)
 			{
 				child = fork();
 				if (child == 0)
 				{
 					if (execve(pathdup, tokline, NULL) == -1)
-						perror("Error: ");
+						perror("Error");
 				}
 				else
 				{
@@ -47,5 +45,7 @@ int execout(char **tokline, char **tokpath)
 				}
 			}
 		}
-	}
+		if (notexe != 0)
+			perror("Error");
+	}return (pathdup);
 }

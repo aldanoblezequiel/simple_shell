@@ -17,8 +17,15 @@ char *_getline(void)
 	{
 		return (NULL);
 	}
-	
-	return line;
+	/* handles ctrl D */
+	if (status == -1)
+	{
+		if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, "\n", 1);
+		free(line);
+		exit(0);
+	}
+	return (line);
 
 }
 
@@ -29,21 +36,23 @@ char *_getline(void)
  * Return: void
  */
 
-void builtins(char **envar, char **token)
-{	
+int builtins(char **envar, char **token)
+{
 	int i = 0;
 
 	if (_strcmp(token[0], "env") == 0)
-	{	
+	{
 		for (; envar[i] != NULL; i++)
 		{
 			write(STDOUT_FILENO, envar[i], _strlen(envar[i]));
 			write(STDOUT_FILENO, "\n", 1);
 		}
+		return (1);
 	}
-	else if (_strcmp(token[0], "exit") == 0)
-		exit(130);
+	else
+		return (0);
 }
+
 
 /**
  * shell - runs user prompt and executes repeatedly
@@ -53,10 +62,10 @@ void builtins(char **envar, char **token)
 
 int shell(char **envar)
 {
-	char *line;
+	char *line, *dupe;
 	char **tokens;
 	char **tokpath;
-	int mode = 1;
+	int mode = 1, ifbuilt;
 
 	tokpath = printpath(_getenv("PATH"));
 
@@ -70,9 +79,14 @@ int shell(char **envar)
 		if (line == NULL)
 			continue;
 		tokens = split(line, " ");
-		builtins(envar, tokens);
-		execout(tokens, tokpath);
+		ifbuilt = builtins(envar, tokens);
+		if (_strcmp(tokens[0], "exit") == 0)
+		{
+			_free(line, tokpath, tokens);
+			__exit();
+		}
+		if (ifbuilt != 1)
+			dupe = execout(tokens, tokpath, dupe);
 	}
-	free(line);
 	return (0);
 }
