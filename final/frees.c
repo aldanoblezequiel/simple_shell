@@ -8,7 +8,7 @@
  * @dupe: str duplicate
  */
 
-void _free(char *line, char **tokpath, char **tokens, char* dupe)
+void _free(char *line, char **tokpath, char **tokens, char *dupe)
 {
 	free(line);
 	free(tokpath);

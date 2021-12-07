@@ -5,7 +5,7 @@
  * Return: returns string stored in buffer
  */
 
-char *_getline(void)
+char *_getline(char *linebuff, char **tokpath, char **tokens, char *dupe)
 {
 	char *line = NULL;
 	size_t buffsize = 0;
@@ -22,8 +22,8 @@ char *_getline(void)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "\n", 1);
-		free(line);
-		exit(0);
+		_free(linebuff, tokpath, tokens, dupe);
+		__exit();
 	}
 	return (line);
 
@@ -75,18 +75,20 @@ int shell(char **envar)
 			write(STDOUT_FILENO, "$ ", 2);
 		else
 			mode = 0;
-		line = _getline();
+		line = _getline(line, tokpath, tokens, dupe);
 		if (line == NULL)
 			continue;
 		tokens = split(line, " ");
+
 		ifbuilt = builtins(envar, tokens);
 		if (_strcmp(tokens[0], "exit") == 0)
 		{
-			_free(line, tokpath, tokens);
-			__exit();
+			break;
 		}
 		if (ifbuilt != 1)
-			dupe = execout(tokens, tokpath, dupe);
+			dupe = execout(tokens, tokpath);
 	}
+	_free(line, tokpath, tokens, dupe);
+	__exit();
 	return (0);
 }

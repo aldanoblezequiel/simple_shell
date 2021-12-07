@@ -28,8 +28,8 @@ char *execout(char **tokline, char **tokpath)
 	{
 		for (i = 0; tokpath[i] != NULL; i++)
 		{
-			pathdup = strdup(tokpath[i]), pathdup = strcat(pathdup, "/");
-			pathdup = strcat(pathdup, tokline[0]), notexe = stat(pathdup, &st);
+			pathdup = strdup(tokpath[i]), pathdup = _strcat(pathdup, "/");
+			pathdup = _strcat(pathdup, tokline[0]), notexe = stat(pathdup, &st);
 			if (stat(pathdup, &st) == 0)
 			{
 				child = fork();

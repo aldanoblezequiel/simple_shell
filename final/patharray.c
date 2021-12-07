@@ -7,8 +7,7 @@
 char *_getenv(char *name)
 {
 	int i = 0;
-	char **buff;
-	char *aux;
+	char *buff;
 	
 	while (environ[i] && _strstr(environ[i], name) == 0)
 	{
@@ -16,11 +15,12 @@ char *_getenv(char *name)
 	}
 	if (environ[i])
 	{
-		buff = split(environ[i], "=");
+		buff = environ[i];
+		buff += 5;
+
 		i = 0;
 	}
-	aux = buff[1];
-	return (aux);
+	return (buff);
 }
 
 /**
