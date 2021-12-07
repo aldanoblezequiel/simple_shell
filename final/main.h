@@ -34,6 +34,7 @@ int _which(char *lf);
 char **split(char *line, char *delim);
 char *_getenv(char *name);
 int _strcmp(char *s1, char *s2);
+int _strncmp(char *s1, char *s2, unsigned int i);
 node *head_linked_list(char **env);
 node *add_node_end(node **head, const char *str);
 void print_list(const node *h);
