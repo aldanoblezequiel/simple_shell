@@ -47,5 +47,5 @@ char *execout(char **tokline, char **tokpath)
 		}
 		if (notexe != 0)
 			perror("Error");
-	}return (pathdup);
+	} return (pathdup);
 }

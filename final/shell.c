@@ -1,7 +1,11 @@
 #include "main.h"
 
 /**
- * _getline - function to get input from user and store it in a buffer
+ * _getline - function gets input form user and store it in a buffer
+ * @tokens: strings
+ * @linebuff: buffer contains the line
+ * @tokpath: tokens path
+ * @dupe: char dupe
  * Return: returns string stored in buffer
  */
 
