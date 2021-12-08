@@ -17,7 +17,7 @@ void _free(char *line, char **tokpath, char **tokens, char *dupe)
 }
 
 /**
- * __exit - a function that exits 
+ * __exit - a function that exits
  * Return: 1
  */
 

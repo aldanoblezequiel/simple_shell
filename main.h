@@ -24,7 +24,7 @@ typedef struct node
 	char *str;
 	struct node *next;
 } node;
-void _free(char *line, char **tokpath, char **tokens, char* dupe);
+void _free(char *line, char **tokpath, char **tokens, char *dupe);
 int __exit(void);
 int _strncmp(char *s1, char *s2, unsigned int i);
 char *execout(char **tokline, char **tokpath);
