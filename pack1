@@ -1,0 +1,443 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+#include <string.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+extern char **environ;
+/**
+ * struct node - singly string linked list
+ * @str: string value (malloc'ed)
+ * @next: pointer to next node
+ *
+ * Description: singly linked list node structure to hold tokenized values
+ */
+
+typedef struct node
+{
+	char *str;
+	struct node *next;
+} node;
+char *_strdup(char *str);
+void _free(char *line, char **tokpath, char **tokens, char *dupe);
+int __exit(void);
+int _strncmp(char *s1, char *s2, size_t i);
+char *execout(char **tokline, char **tokpath);
+int shell(char **envar);
+char **printpath(char *path);
+char *_strcat(char *dest, char *src);
+int _strlen(char *s);
+char *_strstr(char *haystack, char *needle);
+int _which(char *lf);
+char **split(char *line, char *delim);
+char *_getenv(void);
+int _strcmp(char *s1, char *s2);
+node *head_linked_list(char **env);
+node *add_node_end(node **head, const char *str);
+void print_list(const node *h);
+
+#endif
+#include "main.h"
+/**
+ * execout - a function that reads input arguments and executes commands
+ * @tokline: tokenized input by user
+ * @tokpath: tokenized path
+ * Return: 1 if successful 0 if error
+ */
+
+char *execout(char **tokline, char **tokpath)
+{
+	int status, i, notexe, child;
+	char *pathdup;
+	struct stat st;
+
+	if ((strncmp(tokline[0], ".", 1)) == 0 || (strncmp(tokline[0], "/", 1) == 0))
+	{
+		child = fork();
+		if (child == 0)
+		{
+			if (execve(tokline[0], tokline, NULL) == -1)
+				perror("Error");
+		}
+		else
+			wait(&status);
+	}
+
+	else
+	{
+		for (i = 0; tokpath[i] != NULL; i++)
+		{
+			pathdup = _strdup(tokpath[i]), pathdup = _strcat(pathdup, "/");
+			pathdup = _strcat(pathdup, tokline[0]), notexe = stat(pathdup, &st);
+			if (stat(pathdup, &st) == 0)
+			{
+				child = fork();
+				if (child == 0)
+				{
+					if (execve(pathdup, tokline, NULL) == -1)
+						perror("Error");
+				}
+				else
+				{
+					wait(&status);
+					break;
+				}
+			}
+		}
+		if (notexe != 0)
+			perror("Error");
+	} return (pathdup);
+}
+#include "main.h"
+
+/**
+ * _free - a function that free every argument that is passed
+ * @line: line
+ * @tokpath: tokpath
+ * @tokens: tokens
+ * @dupe: str duplicate
+ */
+
+void _free(char *line, char **tokpath, char **tokens, char *dupe)
+{
+	free(line);
+	free(tokpath);
+	free(tokens);
+	free(dupe);
+}
+
+/**
+ * __exit - a function that exits
+ * Return: 1
+ */
+
+int __exit(void)
+{
+	exit(1);
+}
+
+#include "main.h"
+
+/**
+ * main - a function that runs a custom made shell
+ * @ac: argument count
+ * @av: argumetn value
+ * @env: enviroment variables
+ * Return: 0 on success
+ */
+
+int main(int ac, char **av, char **env)
+{
+	(void) ac;
+	(void) av;
+
+	shell(env);
+
+	return (0);
+}
+#include "main.h"
+
+/**
+ * _getenv - return path as array
+ * Return: value of path
+ *@name: string inputed
+ */
+char *_getenv(void)
+{
+	int i = 0;
+	char *buff;
+	int str_val;
+
+	for (i = 0; environ[i]; i++)
+	{
+		str_val = strncmp(environ[i], "PATH", 4);
+		if (str_val == 0)
+		{
+			buff = environ[i];
+			break;
+		}
+	}
+	buff += 5;
+	return (buff);
+}
+
+/**
+ * printpath - converts string path to array
+ * @path: string of path value
+ * Return: array of path value
+ */
+
+char **printpath(char *path)
+{
+	char **buff;
+
+	buff = split(path, ":");
+	return (buff);
+}
+#include "main.h"
+
+/**
+ * _getline - function gets input form user and store it in a buffer
+ * @tokens: strings
+ * @linebuff: buffer contains the line
+ * @tokpath: tokens path
+ * @dupe: char dupe
+ * Return: returns string stored in buffer
+ */
+
+char *_getline(char *linebuff, char **tokpath, char **tokens, char *dupe)
+{
+	char *line = NULL;
+	size_t buffsize = 0;
+	int status;
+
+	status = getline(&line, &buffsize, stdin);
+	line[_strlen(line) - 1] = '\0';
+	if (status == 1)
+	{
+		return (NULL);
+	}
+	/* handles ctrl D */
+	if (status == -1)
+	{
+		_free(linebuff, tokpath, tokens, dupe);
+		__exit();
+	}
+	return (line);
+
+}
+
+/**
+ * builtins - function that executes builtins
+ * @token: first token (holds first input command)
+ * @envar: enviroment variables
+ * Return: void
+ */
+
+int builtins(char **envar, char **token)
+{
+	int i = 0;
+
+	if (_strcmp(token[0], "env") == 0)
+	{
+		for (; envar[i] != NULL; i++)
+		{
+			write(STDOUT_FILENO, envar[i], _strlen(envar[i]));
+			write(STDOUT_FILENO, "\n", 1);
+		}
+		return (1);
+	}
+	else
+		return (0);
+}
+
+
+/**
+ * shell - runs user prompt and executes repeatedly
+ * @envar: enviroment variables
+ * Return: 0 on success
+ */
+
+int shell(char **envar)
+{
+	char *line, *dupe;
+	char **tokens;
+	char **tokpath;
+	int mode = 1, ifbuilt;
+
+	tokpath = printpath(_getenv());
+
+	while (mode)
+	{
+		if (isatty(STDIN_FILENO) == 1)
+			write(STDOUT_FILENO, "$ ", 2);
+		else
+			mode = 0;
+		line = _getline(line, tokpath, tokens, dupe);
+		if (line == NULL)
+			continue;
+		tokens = split(line, " ");
+
+		ifbuilt = builtins(envar, tokens);
+		if (_strcmp(tokens[0], "exit") == 0)
+		{
+			break;
+		}
+		if (ifbuilt != 1)
+			dupe = execout(tokens, tokpath);
+	}
+	_free(line, tokpath, tokens, dupe);
+	__exit();
+	return (0);
+}
+#include "main.h"
+
+/**
+ * split - a function that tokenizes a string
+ * @line: input from user
+ * @delim: delimiter for strtok
+ * Return: tokenized string in form of array
+ */
+
+char **split(char *line, char *delim)
+{
+	int buffsize = 1024, i = 0;
+	char *token;
+
+	char **tokens = malloc(buffsize * sizeof(char *));
+
+	*tokens = NULL;
+	if (!tokens)
+	{
+		fprintf(stderr, "allocation error\n");
+		exit(1);
+	}
+
+	token = strtok(line, delim);
+	while (token != NULL)
+	{
+		tokens[i] = token;
+		i++;
+		token = strtok(NULL, delim);
+	}
+	tokens[i] = NULL;
+	return (tokens);
+}
+#include "main.h"
+
+/**
+**_strcat - Function that concatenates two strings
+*@dest: The string in wich the src string is going to be appended
+*@src: The string that is going to be appended to the dest string
+*Return: The resulting concatenated string
+*/
+
+char *_strcat(char *dest, char *src)
+{
+	int n, s = 0;
+
+	while (dest[s])
+		s++;
+	for (n = 0; src[n] != '\0'; n++)
+	{
+		dest[s] = (src[n]);
+		s++;
+	}
+	return (dest);
+}
+#include "main.h"
+
+/**
+*_strcmp - Compares two or more strings
+*@s1: String 1
+*@s2: String 2
+*Return: 0
+*/
+
+int _strcmp(char *s1, char *s2)
+{
+	int n = 0, t = 0;
+
+	while (s1[n] == s2[n] && s1[n] != '\0' && s2[n] != '\0')
+		n++;
+	if (s1[n] != s2[n])
+		t = s1[n] - s2[n];
+	return (t);
+}
+#include "main.h"
+#include <stdlib.h>
+
+/**
+ *_strdup - a function that returns a pointer to a new string which is
+ * a duplicate of the string str.
+ *@str: string input
+ *Return: NULL if str = NULL and a pointer if if succesful
+ */
+
+char *_strdup(char *str)
+{
+	char *t;
+	int i, j;
+
+	if (str == NULL)
+		return (NULL);
+	for (j = 0; str[j] != '\0'; j++)
+	{
+	}
+	t = malloc(sizeof(char) * (j + 1));
+	if (t == NULL)
+		return (NULL);
+	for (i = 0; i < j; i++)
+		t[i] = str[i];
+	return (t);
+}
+#include "main.h"
+/**
+* _strlen - returns the length of a string.
+ * @s: pointer to string (array of chars)
+ *
+ * Return: String size
+ */
+int _strlen(char *s)
+{
+	int i;
+
+	for (i = 0; s[i] != '\0'; i++)
+	{
+	}
+	return (i);
+}
+#include "main.h"
+
+/**
+*_strncmp - Compares strings up to a certain number of bytes
+*@s1: String 1
+*@s2: String 2
+*@i: Top number of bytes to be compare
+*Return: 0 or byte difference
+*/
+
+int _strncmp(char *s1, char *s2, size_t i)
+{
+	size_t n = 0, op = 0;
+
+	while (op == 0)
+	{
+		if (((*(s1 + n) == '\0') && (*(s2 + n) == '\0')) || n == i)
+			break;
+		op = *(s1 + n) - *(s2 + n);
+	}
+	n++;
+	return (op);
+}
+#include "main.h"
+
+/**
+*_strstr - Functions that locates a substring
+*@needle: Substring 1
+*@haystack: Substring2
+*Return: 0
+*/
+
+char *_strstr(char *haystack, char *needle)
+{
+	int i, h;
+
+	for (i = 0; haystack[i] != '\0'; i++)
+	{
+		for (h = 0; needle[h] != '\0'; h++)
+		{
+			if (haystack[i + h] != needle[h])
+				break;
+		}
+		if (needle[h] == '\0')
+			return (haystack + i);
+	}
+	return (0);
+}
