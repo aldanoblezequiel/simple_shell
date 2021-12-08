@@ -67,16 +67,14 @@ int shell(char **envar)
 	char *line, *dupe;
 	char **tokens;
 	char **tokpath;
-	int mode = 1, ifbuilt;
+	int ifbuilt;
 
 	tokpath = printpath(_getenv());
 
-	while (mode)
+	while (1)
 	{
-		if (isatty(STDIN_FILENO) == 1)
+		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2);
-		else
-			mode = 0;
 		line = _getline(line, tokpath, tokens, dupe);
 		if (line == NULL)
 			continue;
