@@ -69,7 +69,7 @@ int shell(char **envar)
 	char **tokpath;
 	int mode = 1, ifbuilt;
 
-	tokpath = printpath(_getenv("PATH"));
+	tokpath = printpath(_getenv());
 
 	while (mode)
 	{

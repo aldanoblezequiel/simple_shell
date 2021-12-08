@@ -5,22 +5,22 @@
  * Return: value of path
  *@name: string inputed
  */
-char *_getenv(char *name)
+char *_getenv(void)
 {
 	int i = 0;
 	char *buff;
+	int str_val;
 
-	while (environ[i] && _strstr(environ[i], name) == 0)
+	for (i = 0; environ[i]; i++)
 	{
-		i++;
+		str_val = strncmp(environ[i], "PATH", 4);
+		if (str_val == 0)
+		{
+			buff = environ[i];
+			break;
+		}
 	}
-	if (environ[i])
-	{
-		buff = environ[i];
-		buff += 5;
-
-		i = 0;
-	}
+	buff += 5;
 	return (buff);
 }
 

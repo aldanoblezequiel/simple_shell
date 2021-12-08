@@ -18,5 +18,6 @@ int _strncmp(char *s1, char *s2, size_t i)
 			break;
 		op = *(s1 + n) - *(s2 + n);
 	}
+	n++;
 	return (op);
 }

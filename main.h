@@ -36,7 +36,7 @@ int _strlen(char *s);
 char *_strstr(char *haystack, char *needle);
 int _which(char *lf);
 char **split(char *line, char *delim);
-char *_getenv(char *name);
+char *_getenv(void);
 int _strcmp(char *s1, char *s2);
 node *head_linked_list(char **env);
 node *add_node_end(node **head, const char *str);
