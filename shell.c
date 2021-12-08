@@ -71,7 +71,7 @@ int shell(char **envar)
 
 	while (mode)
 	{
-		if (isatty(STDIN_FILENO == 1))
+		if (isatty(STDIN_FILENO) == 1)
 			write(STDOUT_FILENO, "$ ", 2);
 		else
 			mode = 0;
