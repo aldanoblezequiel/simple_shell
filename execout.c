@@ -12,7 +12,7 @@ char *execout(char **tokline, char **tokpath)
 	char *pathdup;
 	struct stat st;
 
-	if ((strncmp(tokline[0], ".", 1)) == 0 || (strncmp(tokline[0], "/", 1) == 0))
+	if ((_strncmp(tokline[0], ".", 1)) == 0 || (_strncmp(tokline[0], "/", 1) == 0))
 	{
 		child = fork();
 		if (child == 0)
