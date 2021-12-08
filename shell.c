@@ -24,7 +24,8 @@ char *_getline(char *linebuff, char **tokpath, char **tokens, char *dupe)
 	/* handles ctrl D */
 	if (status == -1)
 	{
-		_free(linebuff, tokpath, tokens, dupe);
+		if (linebuff && tokpath && tokens && dupe)
+			_free(linebuff, tokpath, tokens, dupe);
 		__exit();
 	}
 	return (line);
@@ -87,6 +88,7 @@ int shell(char **envar)
 		}
 		if (ifbuilt != 1)
 			dupe = execout(tokens, tokpath);
+		free(dupe);
 	}
 	_free(line, tokpath, tokens, dupe);
 	__exit();

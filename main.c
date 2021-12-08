@@ -4,7 +4,7 @@
  * main - a function that runs a custom made shell
  * @ac: argument count
  * @av: argumetn value
- * @env: enviroment variables
+ * @env: enviroment
  * Return: 0 on success
  */
 

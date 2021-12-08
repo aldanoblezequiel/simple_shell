@@ -3,7 +3,6 @@
 /**
  * _getenv - return path as array
  * Return: value of path
- *@name: string inputed
  */
 char *_getenv(void)
 {

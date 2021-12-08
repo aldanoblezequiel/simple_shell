@@ -8,8 +8,8 @@
 
 char *execout(char **tokline, char **tokpath)
 {
-	int status, i, notexe, child;
-	char *pathdup;
+	int status = 0, i = 0, notexe = 0, child = 0;
+	char *pathdup = NULL;
 	struct stat st;
 
 	if ((strncmp(tokline[0], ".", 1)) == 0 || (strncmp(tokline[0], "/", 1) == 0))
