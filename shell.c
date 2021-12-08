@@ -9,7 +9,7 @@
  * Return: returns string stored in buffer
  */
 
-char *_getline(char *linebuff, char **tokpath, char **tokens, char *dupe)
+char *_getline(char *linebuff, char **tokpath, char **tokens)
 {
 	char *line = NULL;
 	size_t buffsize = 0;
@@ -24,8 +24,7 @@ char *_getline(char *linebuff, char **tokpath, char **tokens, char *dupe)
 	/* handles ctrl D */
 	if (status == -1)
 	{
-		if (linebuff && tokpath && tokens && dupe)
-			_free(linebuff, tokpath, tokens, dupe);
+		_free(linebuff, tokpath, tokens);
 		__exit();
 	}
 	return (line);
@@ -65,7 +64,7 @@ int builtins(char **envar, char **token)
 
 int shell(char **envar)
 {
-	char *line, *dupe;
+	char *line;
 	char **tokens;
 	char **tokpath;
 	int ifbuilt;
@@ -76,7 +75,7 @@ int shell(char **envar)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "$ ", 2);
-		line = _getline(line, tokpath, tokens, dupe);
+		line = _getline(line, tokpath, tokens);
 		if (line == NULL)
 			continue;
 		tokens = split(line, " ");
@@ -87,10 +86,9 @@ int shell(char **envar)
 			break;
 		}
 		if (ifbuilt != 1)
-			dupe = execout(tokens, tokpath);
-		free(dupe);
+			execout(tokens, tokpath);
 	}
-	_free(line, tokpath, tokens, dupe);
+	_free(line, tokpath, tokens);
 	__exit();
 	return (0);
 }

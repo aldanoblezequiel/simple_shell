@@ -6,22 +6,16 @@
  * Return: 1 if successful 0 if error
  */
 
-char *execout(char **tokline, char **tokpath)
+int execout(char **tokline, char **tokpath)
 {
-	int status = 0, i = 0, notexe = 0, child = 0;
+	int i = 0, notexe = 0;
 	char *pathdup = NULL;
 	struct stat st;
 
 	if ((strncmp(tokline[0], ".", 1)) == 0 || (strncmp(tokline[0], "/", 1) == 0))
 	{
-		child = fork();
-		if (child == 0)
-		{
-			if (execve(tokline[0], tokline, NULL) == -1)
-				perror("Error");
-		}
-		else
-			wait(&status);
+		execc(tokline[0], tokline);
+		return (0);
 	}
 
 	else
@@ -32,20 +26,37 @@ char *execout(char **tokline, char **tokpath)
 			pathdup = _strcat(pathdup, tokline[0]), notexe = stat(pathdup, &st);
 			if (stat(pathdup, &st) == 0)
 			{
-				child = fork();
-				if (child == 0)
-				{
-					if (execve(pathdup, tokline, NULL) == -1)
-						perror("Error");
-				}
-				else
-				{
-					wait(&status);
-					break;
-				}
+				execc(pathdup, tokline);
+				free(pathdup);
+				break;
 			}
 		}
 		if (notexe != 0)
 			perror("Error");
-	} return (pathdup);
+	}
+	return (0);
+}
+
+/**
+ * execc - function that executes
+ * @pathdup: duplicate of path
+ * @tokline: tokenized line
+ * Return: (0)
+ */
+
+int execc(char *pathdup, char **tokline)
+{
+	int child1 = fork();
+	int status;
+
+	if (child1 == 0)
+	{
+		if (execve(pathdup, tokline, NULL) == -1)
+			perror(tokline[0]);
+	}
+	else
+	{
+		wait(&status);
+	}
+	return (0);
 }

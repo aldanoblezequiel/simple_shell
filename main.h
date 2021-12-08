@@ -24,10 +24,11 @@ typedef struct node
 	char *str;
 	struct node *next;
 } node;
+int execc(char *pathdup, char **tokline);
 char *_strdup(char *str);
-void _free(char *line, char **tokpath, char **tokens, char *dupe);
+void _free(char *line, char **tokpath, char **tokens);
 int __exit(void);
-char *execout(char **tokline, char **tokpath);
+int execout(char **tokline, char **tokpath);
 int shell(char **envar);
 char **printpath(char *path);
 char *_strcat(char *dest, char *src);
