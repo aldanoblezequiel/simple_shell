@@ -24,8 +24,6 @@ char *_getline(char *linebuff, char **tokpath, char **tokens, char *dupe)
 	/* handles ctrl D */
 	if (status == -1)
 	{
-		if (isatty(STDIN_FILENO))
-			write(STDOUT_FILENO, "\n", 1);
 		_free(linebuff, tokpath, tokens, dupe);
 		__exit();
 	}
