@@ -46,13 +46,11 @@ Our Shell is able to:
 <br>
 - Handle the “end of file” condition (Ctrl+D)
 <br>
-@@ -52,7 +52,27 @@ Our Shell is able to:
+Our Shell is able to:
 - Implement the exit built-in, that exits the shell
 <br>
 <h2>Flowchart</h2>
--a
--b
--c
+![flowchart](https://user-images.githubusercontent.com/91083276/145319159-e8e25abe-880d-4a4b-a4c3-2f8833ed4416.png)
 
 <br>
 <h2>Formal Requirements</h2>

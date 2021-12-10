@@ -1,36 +1,34 @@
-.TH printf(1)
+.TH man_simple_shell(1)
 
 .SH NAME
-.B man_simple_shell
+.B Simple_shell: hsh
 
 .SH SYNOPSIS
-.SY
-#include "main.h"
+.B ./hsh 
+
 .br
-int _printf(const char *format, ...);
+simple_shell - ./hsh
 .YS
 
 .SH DESCRIPTION
 .B _printf
-This is a simple shell project
-The format string could be follow by the following conversion requests:
+This is a simple shell project for Holberton School Uruguay.
+This shell is an immitation of a real shell, wich should execute the commands that are input.
 
-.LP
-Conversion specifiers:
-.LP 
-c: Prints a character
-.LP 
-s: Prints a string of characters.
-.LP 
-i: i prints a integer.
-.LP 
-d: d prints a decimal number.
-.LP
-u: prints unsigned int
-.LP
-r: prints a string in reverse.
-.SH RETURN
-Succes unless an option is given or a write or a write argument error occurs.
+.SH OPTIONS:
 
-.SH AUTHOR
-Mateo Victorica and Ezequiel Aldabalde
+.SS Env: Prints Environment variables.
+.BR
+.SS cd: Change current directory.
+.BR
+.SS ls: Print the content of a directory.
+.BR
+.SS pwd: Print Current Working Directory.
+.BR
+.SS exit: Exit the Shell program.
+
+.SH EXIT STATUS
+0 on success, -1 on error.
+
+.SH AUTHORS
+@Mateo Victorica and @Ezequiel Aldabalde
