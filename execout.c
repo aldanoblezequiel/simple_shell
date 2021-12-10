@@ -11,7 +11,7 @@ int execout(char **tokline, char **tokpath)
 	int i = 0, notexe = 0;
 	char *pathdup = NULL;
 	struct stat st;
-	
+
 	if ((strncmp(tokline[0], ".", 1)) == 0 || (strncmp(tokline[0], "/", 1) == 0))
 	{
 		execc(tokline[0], tokline);

@@ -5,7 +5,6 @@
  * @tokens: strings
  * @linebuff: buffer contains the line
  * @tokpath: tokens path
- * @dupe: char dupe
  * Return: returns string stored in buffer
  */
 
